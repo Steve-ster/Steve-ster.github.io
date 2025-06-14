@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Happy Birthday!</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: url('https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=1600&q=80') no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+      backdrop-filter: blur(4px);
+    }
+
+    h1 {
+      font-size: 3em;
+      margin-bottom: 0.2em;
+      animation: fadeInDown 2s ease-in-out;
+    }
+
+    p {
+      font-size: 1.5em;
+      max-width: 90%;
+      animation: fadeInUp 2.5s ease-in-out;
+    }
+
+    @keyframes fadeInDown {
+      0% { opacity: 0; transform: translateY(-20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .heart {
+      font-size: 2em;
+      margin-top: 1em;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+
+    audio {
+      display: none;
+    }
+
+    button {
+      margin-top: 2em;
+      padding: 10px 20px;
+      font-size: 1em;
+      background-color: #ff4081;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      animation: fadeInUp 3s ease-in-out;
+    }
+
+    button:hover {
+      background-color: #e73370;
+    }
+  </style>
+</head>
+<body>
+  <h1>Happy Birthday, Mamma! 🎉</h1>
+  <p>You light up the world just by being in it.  
+     May this year be filled with love, laughter, and everything your heart desires.
+    We love you lots!</p>
+  <div class="heart">❤️</div>
+
+  <button onclick="playAudio()">Play Birthday Song</button>
+  <audio id="birthday-audio" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+
+  <script>
+    function playAudio() {
+      const audio = document.getElementById('birthday-audio');
+      audio.play();
+    }
+  </script>
+</body>
+</html>
