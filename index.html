@@ -8,7 +8,7 @@
     body {
       margin: 0;
       padding: 0;
-      background: url('https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=1600&q=80') no-repeat center center fixed;
+      background: url('background.jpg') no-repeat center center fixed;
       background-size: cover;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       color: white;
@@ -55,10 +55,6 @@
       100% { transform: scale(1); }
     }
 
-    audio {
-      display: none;
-    }
-
     button {
       margin-top: 2em;
       padding: 10px 20px;
@@ -74,17 +70,23 @@
     button:hover {
       background-color: #e73370;
     }
+
+    audio {
+      display: none;
+    }
   </style>
 </head>
 <body>
-  <h1>Happy Birthday, Mamma! 🎉</h1>
-  <p>You light up the world just by being in it.  
-     May this year be filled with love, laughter, and everything your heart desires.
-    We love you lots!</p>
+  <h1>Happy Birthday Mamma!!!! 🎉</h1>
+  <p>Baie geluk met mamma se verjaarsdag. Sjoe waar gaan die jare heen, n paar jaar terug was ek nog net n klein seuntjie wat mamma afgelaai het by die skool en nou ry ek vir mamma rond.
+    En ek wou maar net afshow met hierdie website want die is wat ek secretly gecode het en probeer uitfigure in die aande haha. Anyways
+    Baie dankie vir mamma se jareeee lank se support en advies. Dankie vir alles wat mamma vir ons doen. Al wys ons dit nie atyd nie belowe ek vir mamma ons waardeer al mamma se harde werk baie. Ek weet nie wat ek of die res van die huis sonder mamma sou doen nie.
+    So geniet hierdie maar probeer van nou af dalk n bietjie minder verjaar hehe...
+  </p>
   <div class="heart">❤️</div>
 
   <button onclick="playAudio()">Play Birthday Song</button>
-  <audio id="birthday-audio" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+  <audio id="birthday-audio" src="birthday.mp3"></audio>
 
   <script>
     function playAudio() {
