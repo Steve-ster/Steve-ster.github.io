@@ -123,6 +123,43 @@
       margin: 1em 0;
       display: none;
     }
+
+    .share-section {
+      margin-top: 2em;
+      padding: 1em;
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 8px;
+      display: none;
+    }
+
+    .share-link {
+      background: white;
+      color: black;
+      padding: 0.5em;
+      border-radius: 4px;
+      margin: 1em 0;
+      word-break: break-all;
+    }
+
+    .copy-button {
+      background: #4CAF50;
+      color: white;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin: 0.5em;
+    }
+
+    .copy-button:hover {
+      background: #45a049;
+    }
+
+    .success-message {
+      color: #4CAF50;
+      display: none;
+      margin-top: 0.5em;
+    }
   </style>
 </head>
 <body>
@@ -157,9 +194,16 @@
   <div class="birthday-card" id="birthday-card">
     <h1 id="card-name"></h1>
     <p id="card-message"></p>
-    <div class="heart">❤️</div>
     <button onclick="playAudio()" id="music-button" style="display: none;">Play Music</button>
     <audio id="birthday-audio"></audio>
+    
+    <div class="share-section" id="share-section">
+      <h3>Share this birthday card</h3>
+      <div class="share-link" id="share-link"></div>
+      <button class="copy-button" onclick="copyLink()">Copy Link</button>
+      <div class="success-message" id="success-message">Link copied to clipboard!</div>
+    </div>
+
     <button onclick="resetCard()" style="margin-top: 1em;">Create New Card</button>
   </div>
 
@@ -177,6 +221,16 @@
         reader.readAsDataURL(file);
       }
     });
+
+    // Generate random string for URL
+    function generateRandomString(length) {
+      const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      let result = '';
+      for (let i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * characters.length));
+      }
+      return result;
+    }
 
     // Handle form submission
     document.getElementById('birthday-form').addEventListener('submit', function(e) {
@@ -203,10 +257,61 @@
         document.getElementById('music-button').style.display = 'inline-block';
       }
 
+      // Generate and display share link
+      const randomId = generateRandomString(10);
+      const shareLink = `${window.location.origin}${window.location.pathname}?id=${randomId}`;
+      document.getElementById('share-link').textContent = shareLink;
+      document.getElementById('share-section').style.display = 'block';
+
+      // Store card data in localStorage
+      const cardData = {
+        name: name,
+        message: message,
+        background: backgroundUrl,
+        music: musicFile ? URL.createObjectURL(musicFile) : null
+      };
+      localStorage.setItem(`birthday-card-${randomId}`, JSON.stringify(cardData));
+
       // Show card
       document.getElementById('setup-form').style.display = 'none';
       card.style.display = 'flex';
       card.style.flexDirection = 'column';
+    });
+
+    function copyLink() {
+      const shareLink = document.getElementById('share-link').textContent;
+      navigator.clipboard.writeText(shareLink).then(() => {
+        const successMessage = document.getElementById('success-message');
+        successMessage.style.display = 'block';
+        setTimeout(() => {
+          successMessage.style.display = 'none';
+        }, 2000);
+      });
+    }
+
+    // Check for shared card on page load
+    window.addEventListener('load', function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const cardId = urlParams.get('id');
+      
+      if (cardId) {
+        const cardData = localStorage.getItem(`birthday-card-${cardId}`);
+        if (cardData) {
+          const data = JSON.parse(cardData);
+          document.getElementById('setup-form').style.display = 'none';
+          document.getElementById('birthday-card').style.display = 'flex';
+          document.getElementById('birthday-card').style.flexDirection = 'column';
+          document.getElementById('card-name').textContent = `Happy Birthday ${data.name}! 🎉`;
+          document.getElementById('card-message').textContent = data.message;
+          document.getElementById('birthday-card').style.backgroundImage = `url('${data.background}')`;
+          
+          if (data.music) {
+            const audio = document.getElementById('birthday-audio');
+            audio.src = data.music;
+            document.getElementById('music-button').style.display = 'inline-block';
+          }
+        }
+      }
     });
 
     function playAudio() {
